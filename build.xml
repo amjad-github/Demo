@@ -376,7 +376,7 @@
 		<!-- Build a destructiveChanges.xml pacckage to delete metadata in org but not in repo -->
 		<buildDestroyStaleMetadata srcdir="uninstallsrc" commdir="./src" dir="uninstall" />
 		
-		<copy file="${user.dir}/build/uninstall/destructiveChanges.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
+		<copy file="${user.dir}/uninstall/destructiveChanges.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
 		
 		<!-- deploy the destructiveChanges.xml package -->
 		<sf:deploy 
