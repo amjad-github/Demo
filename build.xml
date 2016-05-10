@@ -216,7 +216,7 @@
 	-->
 	<target name="DeployAndRunAllTests">
 		<echo>Deploy and RunAllTests in Org with username: ${sf.username}</echo>
-		<echo>Logging Level:  ${env.SF_LOGDETAIL}</echo>
+		<echo>Logging Level:  ${SF_LOGDETAIL}</echo>
 		<echo>Test Level:  ${sf.testLevel}</echo>
 		<sf:deploy 
 			username="${sf.username}" 
