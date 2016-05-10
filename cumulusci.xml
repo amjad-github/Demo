@@ -14,7 +14,7 @@
       />  
 
   <!-- load whitelists -->
-  <loadproperties srcFile="../build/whitelists/object_subtype.properties"/>
+  <loadproperties srcFile="./whitelists/object_subtype.properties"/>
   <loadfile property="metadata_whitelist" srcfile="../whitelists/metadata.txt" />
 
   <!-- Ant doesn't like < in replace tokens or values so set a property with < via cdata for reuse later -->
@@ -532,7 +532,7 @@ project.setProperty("downgradePackage", result);
     <attribute name="suffix" description="The suffix of the metadata file to search in.  For example, object for object files" default="object" />
     <attribute name="xmlfile" description="The path of the target package.xml or destructiveChanges.xml file" />
     <attribute name="typename" description="The type name as would appear in the manifest type's name element" />
-    <attribute name="xslt" description="The path of the xslt transform to extract type components from the standard object file" default="../build/xsl/extract_subtype.xsl" />
+    <attribute name="xslt" description="The path of the xslt transform to extract type components from the standard object file" default="./xsl/extract_subtype.xsl" />
     <attribute name="element" description="The xml element to look for.  This is passed to the xslt to allow easier template reuse" />
     <attribute name="nameelement" description="The xml element whose value should provide the name (used in the package.xml members tag)." default="fullName" />
     <attribute name="parentelement" description="The containing element name in target files.  For example, CustomObject if looking in object files" default="CustomObject" />
@@ -620,7 +620,7 @@ project.setProperty("downgradePackage", result);
                 <then>
                   <var name="type.extract" value="${line.separator}    ${lt}types>${line.separator}${type.extract}        ${lt}name>@{typename}${lt}/name>${line.separator}    ${lt}/types>" />
                   <replaceregexp file="@{xmlfile}" match="Package(.*)>" replace="Package\1>${type.extract}" />
-                  <xslt in="@{xmlfile}" out="@{xmlfile}.tidy" style="../build/xsl/tidy_package_xml.xsl" />
+                  <xslt in="@{xmlfile}" out="@{xmlfile}.tidy" style="./xsl/tidy_package_xml.xsl" />
                   <move file="@{xmlfile}.tidy" tofile="@{xmlfile}" />
                 </then>
               </if>
@@ -653,7 +653,7 @@ project.setProperty("downgradePackage", result);
       <!--<addMetadataSubType dir="${basedir}/@{srcDir}" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="ActionOverride" element="actionOverrides" nameelement="actionName" />-->
       <addMetadataSubType dir="${basedir}/@{srcDir}/objects" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="BusinessProcess" element="businessProcesses" />
       <addMetadataSubType dir="${basedir}/@{srcDir}/objects" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="CompactLayout" element="compactLayouts" />
-      <addMetadataSubType dir="${basedir}/@{srcDir}/objects" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="CustomField" element="fields" xslt="../build/xsl/extract_obj_fields.xsl" />
+      <addMetadataSubType dir="${basedir}/@{srcDir}/objects" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="CustomField" element="fields" xslt="./xsl/extract_obj_fields.xsl" />
       <addMetadataSubType dir="${basedir}/@{srcDir}/labels" suffix="labels" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="CustomLabel" element="labels" parentelement="CustomLabels" />
       <addMetadataSubType dir="${basedir}/@{srcDir}/objects" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="FieldSet" element="fieldSets" />
       <addMetadataSubType dir="${basedir}/@{srcDir}/objects" xmlfile="${basedir}/@{srcDir}/package.xml.new" typename="ListView" element="listViews" />
@@ -677,8 +677,8 @@ project.setProperty("downgradePackage", result);
     <attribute name="dir" description="Target directory to create the destructiveChanges.xml package" />
     <sequential>
       <!-- Run xslt against package.xml files to generate a text file containing TYPE::MEMBER lines for each member for easier comparison later -->
-      <xslt in="@{srcdir}/package.xml" out="@{srcdir}/package.xml.members" style="../build/xsl/diff_package_xml.xsl" />
-      <xslt in="@{commdir}/package.xml" out="@{commdir}/package.xml.members" style="../build/xsl/diff_package_xml.xsl" />
+      <xslt in="@{srcdir}/package.xml" out="@{srcdir}/package.xml.members" style="./xsl/diff_package_xml.xsl" />
+      <xslt in="@{commdir}/package.xml" out="@{commdir}/package.xml.members" style="./xsl/diff_package_xml.xsl" />
       <loadfile property="src.package.xml.members" srcfile="@{srcdir}/package.xml.members" />
       <loadfile property="comm.package.xml.members" srcfile="@{commdir}/package.xml.members" />
 
@@ -786,7 +786,7 @@ project.setProperty("downgradePackage", result);
 
       <!-- Add standard object fields to destructiveChanges.xml -->
       <addMetadataSubType dir="@{srcdir}/objects" xmlfile="@{dir}/destructiveChanges.xml" typename="CompactLayout" element="compactLayouts" />
-      <addMetadataSubType dir="@{srcdir}/objects" xmlfile="@{dir}/destructiveChanges.xml" typename="CustomField" element="fields" xslt="../build/xsl/extract_obj_fields.xsl" />
+      <addMetadataSubType dir="@{srcdir}/objects" xmlfile="@{dir}/destructiveChanges.xml" typename="CustomField" element="fields" xslt="./xsl/extract_obj_fields.xsl" />
       <addMetadataSubType dir="@{srcdir}/labels" suffix="labels" xmlfile="@{dir}/destructiveChanges.xml" typename="CustomLabel" element="labels" parentelement="CustomLabels" />
       <addMetadataSubType dir="@{srcdir}/objects" xmlfile="@{dir}/destructiveChanges.xml" typename="FieldSet" element="fieldSets" />
       <addMetadataSubType dir="@{srcdir}/objects" xmlfile="@{dir}/destructiveChanges.xml" typename="ListView" element="listViews" />
@@ -839,7 +839,7 @@ project.setProperty("downgradePackage", result);
           <basename property="object" file="@{file}" suffix=".object" />
 
           <!-- Rewrite all ActionOverrides to type Default.  This is a special case since we can't delete ActionOverrides via destructiveChanges.xml -->
-          <xslt in="@{file}" out="@{dir}/standard/objects/${obj_file}" style="../build/xsl/remove_action_overrides.xsl" />
+          <xslt in="@{file}" out="@{dir}/standard/objects/${obj_file}" style="./xsl/remove_action_overrides.xsl" />
 
           <!-- Unset properites for basename call in next iteration of loop -->
           <var name="object" unset="true" />
@@ -850,7 +850,7 @@ project.setProperty("downgradePackage", result);
       <!-- Add sub metadata types which can be deleted to destructiveChanges.xml.  Currently this only handles custom fields and fieldsets. -->
 
       <addMetadataSubType dir="@{srcdir}/standard/objects" xmlfile="@{dir}/unpackaged/destructiveChanges.xml" typename="CompactLayout" element="compactLayout" />
-      <addMetadataSubType dir="@{srcdir}/standard/objects" xmlfile="@{dir}/unpackaged/destructiveChanges.xml" typename="CustomField" element="fields" xslt="../build/xsl/extract_obj_fields.xsl" />
+      <addMetadataSubType dir="@{srcdir}/standard/objects" xmlfile="@{dir}/unpackaged/destructiveChanges.xml" typename="CustomField" element="fields" xslt="./xsl/extract_obj_fields.xsl" />
       <addMetadataSubType dir="@{srcdir}/unpackaged/labels" suffix="labels" xmlfile="@{dir}/unpackaged/destructiveChanges.xml" typename="CustomLabel" element="labels" parentelement="CustomLabels" />
       <addMetadataSubType dir="@{srcdir}/standard/objects" xmlfile="@{dir}/unpackaged/destructiveChanges.xml" typename="FieldSet" element="fieldSets" />
       <addMetadataSubType dir="@{srcdir}/standard/objects" xmlfile="@{dir}/unpackaged/destructiveChanges.xml" typename="ListView" element="listViews" />
@@ -875,7 +875,7 @@ project.setProperty("downgradePackage", result);
     <sequential>
 
       <delete file="${basedir}/update_meta_xml.xsl.rendered" />
-      <copy file="../build/xsl/update_meta_xml.xsl" tofile="${basedir}/update_meta_xml.xsl.rendered" />
+      <copy file="./xsl/update_meta_xml.xsl" tofile="${basedir}/update_meta_xml.xsl.rendered" />
       <replaceregexp file="${basedir}/update_meta_xml.xsl.rendered" match="___namespace___" replace="@{namespace}" flags="g" />
 
       <propertyregex property="updatemetaxml.major" override="true" input="${version.@{namespace}}" regexp="(\d+)\.(\d+(\.\d+)?)" replace="\1" />
@@ -914,7 +914,7 @@ project.setProperty("downgradePackage", result);
           <fileset dir="@{dir}" includes="**/*-meta.xml" />
         </path>
         <sequential>
-          <xslt in="@{file}" out="@{file}.updated" style="../build/xsl/update_meta_xml_api.xsl">
+          <xslt in="@{file}" out="@{file}.updated" style="./xsl/update_meta_xml_api.xsl">
             <param name="apiVersion" expression="@{apiVersion}" />
           </xslt>
           <if>
