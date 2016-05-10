@@ -5,14 +5,14 @@
 	
 	<target name="Build">
 		<echo>Continuous Integration Build</echo>
-		<taskdef resource="net/sf/antcontrib/antlib.xml" />
+		<taskdef resource="com/antcontrib/antlib.xml" classpath="../lib/ant-salesforce.jar" />
 		<property environment="env" />
-		<echo>Branch: ${env.GIT_BRANCH##origin/}</echo>
+		<echo>Branch: ${GIT_BRANCH##origin/}</echo>
 		
 		<if>
-			<available file="build.${env.GIT_BRANCH##origin/}.properties"/>
+			<available file="build.${GIT_BRANCH##origin/}.properties"/>
 			<then>
-				<property file="build.${env.GIT_BRANCH##origin/}.properties" />
+				<property file="build.${GIT_BRANCH##origin/}.properties" />
 			</then>
 			<else>
 				<property file="build.properties" />
@@ -20,10 +20,10 @@
 				<!-- remove "." and "-" from the branch name.
 				Env.Properties cannot have these chars -->
 				<propertyregex property="branch_clean"
-						  input="${env.GIT_BRANCH##origin/}"
+						  input="${GIT_BRANCH##origin/}"
 						  regexp="[\.\-]"
 						  replace="_"
-						  defaultValue="${env.GIT_BRANCH##origin/}"
+						  defaultValue="${GIT_BRANCH##origin/}"
 						  global="true"
 						  casesensitive="false" />
 				<echo>Branch Clean: ${branch_clean}</echo>
