@@ -241,7 +241,7 @@
 			serverurl="${sf.serverurl}" 
 			maxPoll="${sf.maxPoll}" 
 			deployRoot="${user.dir}/src" 
-			logType="${env.SF_LOGDETAIL}"
+			logType="${SF_LOGDETAIL}"
 			runallTests="false" />
 	</target>
 
@@ -301,7 +301,7 @@
 	<target name="buildPackageXmlAndDeployWithTests">
 		<antcall target="updatePackageXml" />
 		
-		<copy file="../src/package.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
+		<copy file="./src/package.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
 			
 		<antcall target="DeployAndRunAllTests" />
 		
