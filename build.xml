@@ -218,6 +218,7 @@
 		<echo>Deploy and RunAllTests in Org with username: ${sf.username}</echo>
 		<echo>Logging Level:  ${SF_LOGDETAIL}</echo>
 		<echo>Test Level:  ${sf.testLevel}</echo>
+		<echo>Dir:  ${user.dir}/src</echo>
 		<sf:deploy 
 			username="${sf.username}" 
 			password="${sf.password}" 
@@ -331,22 +332,22 @@
     			<isset property="sf.package.uninstallClass" />
     		</and>
     		<then>
-        		<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" installClass="${sf.package.installClass}" uninstallClass="${sf.package.uninstallClass}" />
+        		<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="./src" installClass="${sf.package.installClass}" uninstallClass="${sf.package.uninstallClass}" />
         	</then>
         	<else>
         		<if>
     				<isset property="sf.package.installClass" />
     				<then>
-        				<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" installClass="${sf.package.installClass}" />
+        				<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="./src" installClass="${sf.package.installClass}" />
         			</then>
         			<else>
         				<if>
     						<isset property="sf.package.uninstallClass" />
         					<then>
-        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" uninstallClass="${sf.package.uninstallClass}" />
+        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="./src" uninstallClass="${sf.package.uninstallClass}" />
         					</then>
         					<else>
-        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" />
+        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="./src" />
         					</else>
         				</if>
         			</else>
@@ -373,7 +374,7 @@
 			packageNames="${sf.package.name}"/>
 
 		<!-- Build a destructiveChanges.xml pacckage to delete metadata in org but not in repo -->
-		<buildDestroyStaleMetadata srcdir="uninstallsrc" commdir="../src" dir="uninstall" />
+		<buildDestroyStaleMetadata srcdir="uninstallsrc" commdir="./src" dir="uninstall" />
 		
 		<copy file="${user.dir}/build/uninstall/destructiveChanges.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
 		
@@ -384,7 +385,7 @@
 			serverurl="${sf.serverurl}" 
 			deployRoot="uninstall" 
 			runAllTests="false" 
-			logType="${env.SF_LOGDETAIL}"
+			logType="${SF_LOGDETAIL}"
 			purgeOnDelete="true" />
 
 		<delete dir="uninstallsrc" />
