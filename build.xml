@@ -170,7 +170,7 @@
 	<target name="cleanProfilesPermSets">
 		<echo>Cleaning Profiles &amp; Permission Sets</echo>
 
-		<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+		<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="../lib/xmltask.jar"/>
 
 		<for param="file">
 			<path>
