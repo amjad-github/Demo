@@ -6,11 +6,7 @@
 	<target name="Build">
 		<echo>Continuous Integration Build</echo>
 		<echo>Continuous Integration Build</echo>
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
-			<classpath>
-				<pathelement location="../lib/ant-contrib-1.0b3.jar"/>
-			</classpath>
-		</taskdef>
+		<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="../lib/ant-contrib-1.0b3.jar" />
 		<property environment="env" />
 		<echo>Branch: ${GIT_BRANCH_NAME}</echo>
 		
