@@ -5,7 +5,12 @@
 	
 	<target name="Build">
 		<echo>Continuous Integration Build</echo>
-		<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="../lib/ant-contrib-1.0b3.jar" />
+		<echo>Continuous Integration Build</echo>
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="../lib/ant-contrib-1.0b3.jar"/>
+			</classpath>
+		</taskdef>
 		<property environment="env" />
 		<echo>Branch: ${GIT_BRANCH_NAME}</echo>
 		
@@ -174,8 +179,8 @@
 
 		<for param="file">
 			<path>
-				<fileset dir="../src/profiles" includes="*.profile" erroronmissingdir="false"/>
-				<fileset dir="../src/permissionsets" includes="*.permissionset" erroronmissingdir="false"/>
+				<fileset dir="./src/profiles" includes="*.profile" erroronmissingdir="false"/>
+				<fileset dir="./src/permissionsets" includes="*.permissionset" erroronmissingdir="false"/>
 			</path>
 			<sequential>
 				<echo>Cleaning file @{file}</echo>
